@@ -1,15 +1,11 @@
-{application, carbonara,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, {carbonara_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {licenses, ["Apache 2.0"]},
-  {links, []}
- ]}.
+{application, carbonara, [
+    {description, "Discord pomodoro bot"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {carbonara_app, []}},
+    {applications, [kernel, stdlib, discordant]},
+    {env, []},
+    {modules, []},
+    {licenses, ["Apache 2.0"]},
+    {links, []}
+]}.
