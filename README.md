@@ -11,10 +11,10 @@ Starts a pomodoro session with **25** minutes work and **5, 5, 5, 15** minutes b
 Stops the ongoing pomodoro session.
 
 ### `cb!join`
-Adds the command runner to a list of pomodoro followers. You'll get @mentioned for each ping.
+Adds the command runner to a list of pomodoro followers. You'll get @mentioned for each work/break ping.
 
 ### `cb!leave`
-Removes the command runner from pomodoro runners, and future pings will not mention you.
+Removes the command runner from pomodoro followers, and future pings will not mention you.
 
 ## Prerequisites
 - Erlang
@@ -46,7 +46,7 @@ $ rebar3 shell
 ## Features TODO
 - VC pings
 - Customizable time
-- Time calculation
+- Calculate time of next work session/break
 - Command and/or GUI to check remaining time
 - Slash commands
 

@@ -19,9 +19,9 @@
     %% inactive | work | break
     {
         stage = inactive,
-        work_duration_mins = 1,
-        small_break_duration_mins = 1,
-        big_break_duration_mins = 2,
+        work_duration_mins = 25,
+        small_break_duration_mins = 5,
+        big_break_duration_mins = 15,
         break_index = 1,
         channel_id,
         subscribers = sets:new([{version, 2}]),
@@ -67,9 +67,7 @@ handle_call(stop_pom, _From, State = #state{timer_ref = TimerRef}) ->
         break_index = 1,
         subscribers = []
     }};
-handle_call({join_pom, _UserId}, _From, State = #state{stage = Stage}) when
-    Stage =:= inactive
-->
+handle_call({join_pom, _UserId}, _From, State = #state{stage = inactive}) ->
     {reply, {reply, <<"No session in progress.">>, []}, State};
 handle_call({join_pom, UserId}, _From, State = #state{subscribers = Subscribers}) ->
     Message =
@@ -83,9 +81,7 @@ handle_call({join_pom, UserId}, _From, State = #state{subscribers = Subscribers}
     {reply, {reply, MessageWithMention, []}, State#state{
         subscribers = sets:add_element(UserId, Subscribers)
     }};
-handle_call({leave_pom, _UserId}, _From, State = #state{stage = Stage}) when
-    Stage =:= inactive
-->
+handle_call({leave_pom, _UserId}, _From, State = #state{stage = inactive}) ->
     {reply, {reply, <<"No session in progress.">>, []}, State};
 handle_call({leave_pom, UserId}, _From, State = #state{subscribers = Subscribers}) ->
     Message =
