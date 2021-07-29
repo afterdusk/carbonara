@@ -15,19 +15,17 @@
     code_change/3
 ]).
 
--record(state,
+-record(state, {
     %% inactive | work | break
-    {
-        stage = inactive,
-        work_duration_mins = 25,
-        small_break_duration_mins = 5,
-        big_break_duration_mins = 15,
-        break_index = 1,
-        channel_id,
-        subscribers = sets:new([{version, 2}]),
-        timer_ref
-    }
-).
+    stage = inactive,
+    work_duration_mins = 10,
+    small_break_duration_mins = 1,
+    big_break_duration_mins = 2,
+    break_index = 1,
+    channel_id,
+    subscribers = sets:new([{version, 2}]),
+    timer_ref
+}).
 
 % API
 start_link_local() ->
@@ -149,7 +147,10 @@ handle_info(
 handle_info(_Info, State) ->
     {noreply, State}.
 
-terminate(_Reason, _State) ->
+terminate(_Reason, #state{stage = inactive}) ->
+    ok;
+terminate(_Reason, #state{timer_ref = TimerRef}) ->
+    erlang:cancel_timer(TimerRef),
     ok.
 
 code_change(_OldVsn, State, _Extra) ->
